@@ -1,0 +1,42 @@
+from PIL import Image, ImageDraw
+
+# Dimensiunile imaginii
+width, height = 480, 320
+
+# Creăm o imagine nouă
+image = Image.new("RGB", (width, height), "white")
+draw = ImageDraw.Draw(image)
+
+# Lățimile benzilor verticale (proporții aproximative)
+blue_width = width * 2 // 9
+gold_width = width * 5 // 9
+green_width = width * 2 // 9
+
+# Desenăm benzile verticale
+draw.rectangle([0, 0, blue_width, height], fill="#0072C6")    # Albastru
+draw.rectangle([blue_width, 0, blue_width + gold_width, height], fill="#FFD100")  # Galben (aur)
+draw.rectangle([blue_width + gold_width, 0, width, height], fill="#009E49")  # Verde
+
+# Desenăm romburile verzi în centru (dispuși în V)
+diamond_size = 40
+center_x = width // 2
+center_y = height // 2
+spacing_x = diamond_size + 10
+spacing_y = diamond_size + 10
+
+def draw_diamond(x, y, size, color):
+    size += 40
+    draw.polygon([
+        (x, y - size // 2),
+        (x + size // 2, y),
+        (x, y + size // 2),
+        (x - size // 2, y)
+    ], fill=color)
+
+# Pozițiile romburilor
+draw_diamond(center_x - spacing_x, center_y, diamond_size, "#009E49")
+draw_diamond(center_x, center_y + spacing_y, diamond_size, "#009E49")
+draw_diamond(center_x + spacing_x, center_y, diamond_size, "#009E49")
+
+# Afișăm imaginea
+image.show()
